@@ -84,10 +84,9 @@ classification:
   arxiv:
   - math.NT
   msc2020:
-  - 11T24
-  - 11T22
-  - 11A63
-sources:
+  - '11T24'
+  - '11T22'
+  - '11A63'sources:
 - title: Digit Visibility and Weight Degeneration in Cyclotomic Kummer Covers
   authors:
   - Brandon Yates
