@@ -199,9 +199,9 @@ sources:
   note: 'Source of the Hasse-Davenport lifting relation for Gauss sums between
     a finite field and its extensions. Recorded because it is the standard alternative
     route to the even-level evaluation and because Mathlib has no lifting relation,
-    so a proof taking that route would have to build it; the route planned in PROOF_PLAN.md
-    goes through the semiprimitive evaluation instead, so as matters stand no compared
-    statement depends on this paper. Cited here to correct an omission in the source
+    so a proof taking that route would have to build it; the proof formalized here goes
+    through an elementary semiprimitive evaluation instead, so no compared statement
+    depends on this paper. Cited here to correct an omission in the source
     manuscript, whose bibliography lists this work with no citation pointing at
     it. Both authors are deceased, so no contact was possible.'
   author_endorsement: n/a
