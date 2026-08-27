@@ -342,8 +342,21 @@ automation:
       separately cancels identically and is never evaluated. The plan''s separate finite
       checks for q = 2 were subsumed by a base-change bound and never appeared.'
   spend_usd: subscription-based
-  notes: The mathematics is the author's. The Lean formalization is to be produced
-    by automation under the author's direction and verified mechanically.
+  notes: 'Roles, stated separately. Direction: the author selected the problem, found
+    the original special case that the source manuscript generalizes, set the five
+    target statements and their scope, directed the work, and takes responsibility for
+    the submission. Mathematical argument: the general statements of the source
+    manuscript were developed with AI assistance (a GPT-family model) under the
+    author''s direction from the author''s special case; the proofs formalized here --
+    including the elementary semiprimitive Gauss-sum evaluation that replaces the
+    Stickelberger / Davenport-Hasse route -- were developed by AI agents (Claude Code,
+    claude-opus-5) during formalization, not by the author. Formalization: the same
+    agents, against frozen lemma contracts. Verification: mechanical (Lean, the axiom
+    audit, Comparator) plus an independent re-verification pass by a separate agent
+    (claude-fable-5): clean rebuild, per-theorem axiom audit, whitespace-normalized
+    statement diff, rfl bridge. Communication: the Challenge documentation, this
+    metadata and the library README were drafted by agents and reviewed by the author
+    before submission.'
 fidelity:
   divergences: 'The compared statements are the arithmetic underneath the source
     manuscript''s theorems, not those theorems as the manuscript states them. Four
