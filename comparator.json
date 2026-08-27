@@ -1,0 +1,15 @@
+{
+  "challenge_module": "Challenge",
+  "solution_module": "Solution",
+  "theorem_names": [
+    "CyclotomicRepunit.orderOf_eval_cyclotomic",
+    "CyclotomicRepunit.dvd_repunit_iff",
+    "CyclotomicRepunit.jacobiSumK_norm_dichotomy",
+    "CyclotomicRepunit.jacobiSumK_even_level_eval",
+    "CyclotomicRepunit.jacobiSumK_two"
+  ],
+  "definition_names": [
+    "CyclotomicRepunit.jacobiSumK"
+  ],
+  "permitted_axioms": ["propext", "Quot.sound", "Classical.choice"]
+}

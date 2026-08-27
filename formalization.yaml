@@ -1,0 +1,450 @@
+version: v0.4
+project:
+  name: Cyclotomic divisors of repunits and the degeneration of a Jacobi sum
+  description: 'This project formalizes in Lean 4 the arithmetic core of a structure
+    theorem about base-q digit blocks. Fix an integer base q >= 2, a level d >=
+    2, and a block length k. Write R_k(q) = 1 + q + ... + q^(k-1) for the base-q
+    repunit of length k, and Phi_d(q) for the value at the integer q of the d-th
+    cyclotomic polynomial, which is the level-d factor in q^k - 1 = product over
+    d dividing k of Phi_d(q). No cyclotomic field extension and no Kummer field
+    extension occurs anywhere in this project: the vocabulary throughout is elementary
+    integer arithmetic and character sums over finite fields. Five statements
+    are compared. (1) The multiplicative order of q modulo Phi_d(q) is exactly
+    d, for every q >= 2 and every d >= 2, with the single exception (q,d) = (2,6),
+    where Phi_6(2) = 3 = Phi_2(2) and the order is 2. This is the primitive-divisor
+    theorem of Bang and Zsigmondy, in the form given by Birkhoff and Vandiver
+    (1904), restated for the specialized cyclotomic integer and reproved in Lean.
+    (2) Consequently Phi_d(q) divides R_k(q) if and only if d divides k, away
+    from that one exception; no hypothesis on k is needed. (3) Let K be a finite
+    field with #K = q^d, and let theta be a multiplicative character of K of exact
+    order Phi_d(q). For every j coprime to that order, the k-fold Jacobi sum of
+    the Frobenius-twisted tuple (theta^j, theta^(jq), ..., theta^(jq^(k-1))) has
+    squared absolute value (#K)^(k-1) when d does not divide k, and (#K)^(k-2)
+    when d divides k. So the divisibility criterion of (2) is exactly the locus
+    on which this Jacobi sum degenerates by one power of #K. (4) For even d and
+    prime p, that Jacobi sum has an exact closed value, uniform in the block length
+    k and independent of which primitive character of order Phi_d(p) is chosen:
+    it is p^((d/2)(k-1)) off the divisibility locus and -p^((d/2)(k-2)) on it.
+    (5) The one new definition, the k-fold Jacobi sum, reduces at k = 2 to Mathlib''s
+    two-variable jacobiSum. The exponent tuple (1, q, ..., q^(k-1)) is not a choice
+    made to produce the conclusion: it is the vector of place values of a length-k
+    block of base-q digits, and Phi_d(q) is the level-d factor of q^k - 1 in the
+    same base. The two classical inputs collide because the product character
+    of that tuple is theta^(j R_k(q)), which is trivial exactly when Phi_d(q)
+    divides R_k(q); off that locus the Gauss-Jacobi product formula and the Gauss-sum
+    norm identity give the full weight, and on it the degenerate identity for
+    a product-trivial Jacobi sum gives one power less. The even-level evaluation
+    rests on the semiprimitive, or uniform cyclotomy, condition p^(d/2) = -1 mod
+    Phi_d(p), which statement (1) supplies. The audience is two live communities.
+    First, semiprimitive Gauss-sum evaluation and uniform cyclotomy: Carlitz (1956),
+    Baumert and McEliece (1972), Evans (1981), and Baumert, Mills and Ward, Uniform
+    cyclotomy, J. Number Theory 14 (1982), 67-82, a line continued by Huczynska,
+    Johnson and Paterson, Beyond uniform cyclotomy, Finite Fields Appl. 105 (2025),
+    article 102604. Second, diagonal-hypersurface and Fermat motives whose Frobenius
+    eigenvalues are Jacobi sums: Shioda and Katsura (1979), Ran (1980/81), Otsubo
+    (2015), Nakagawa, Artin L-functions of diagonal hypersurfaces and generalized
+    hypergeometric functions over finite fields, Hiroshima Math. J. 54 (2024),
+    no. 3, and Otsubo and Yamazaki, Motivic Gauss and Jacobi sums, Ann. Fac. Sci.
+    Toulouse (6) 35 (2026), 95-135, which is the closest prior art to the compared
+    statements. Scope limitation, stated plainly. The source manuscript states
+    (3) and (4) as facts about the compactly supported etale cohomology of a cyclic
+    cover of the open simplex, in which these Jacobi sums are Frobenius eigenvalues
+    and the dichotomy is a drop of exactly one in cohomological weight. None of
+    that geometry is asserted anywhere in this project and no compared statement
+    depends on it. Mathlib today has no etale cohomology with compact supports,
+    no Frobenius action on l-adic cohomology and no theory of weights, so those
+    geometric statements are not expressible; what is compared is the arithmetic
+    underneath them. The source manuscript also contains sections on Hecke characters,
+    Galois representations and the Riemann zeta function. None of that is in scope
+    here, and no compared statement mentions any zeta function or L-function.
+    On novelty: the ingredients are classical and are not claimed as new. The
+    order statement is Bang-Zsigmondy; the norm dichotomy is the standard Gauss-Jacobi
+    computation applied to this tuple; the even-level evaluation runs on the classical
+    semiprimitive Gauss-sum evaluation. What the source manuscript claims, and
+    what this entry records, is the assembly: the modulus Phi_d(q) together with
+    the digit exponent vector, the divisibility criterion including the (2,6) collision,
+    and the even-level evaluation uniform in k and independent of the orbit. In
+    the manuscript''s own words, a targeted search dated 19 July 2026 found no
+    source stating this complete assembly, which supports the designation "potentially
+    new as stated," not a proof of priority. That search was targeted rather than
+    systematic, and the manuscript''s own literature boundary names the Delsarte
+    and hypergeometric-motive literature as the main residual collision risk. The
+    contribution recorded here is the proof-assistant formalization and its auditable
+    dependency chain.'
+  authors:
+  - Brandon Yates
+  license: Apache-2.0
+  responsible_maintainers:
+  - Brandon Yates
+repository:
+  substantive_formalization:
+    id: BrandonMYates/digitvis
+    revision: 4060346c7352657bb057bac47d61bb454ac8e1ba
+classification:
+  arxiv:
+  - math.NT
+  msc2020:
+  - 11T24
+  - 11T22
+  - 11A63
+sources:
+- title: Digit Visibility and Weight Degeneration in Cyclotomic Kummer Covers
+  authors:
+  - Brandon Yates
+  type: paper
+  location: Extended working draft, 19 July 2026, Lemma 2.1, Corollary 2.2, Theorem
+    3.1 equation (3.x), Theorem 7.4
+  relationship: formalizes
+  note: Unpublished manuscript, privately dated 19 July 2026; not publicly available.
+    The compared theorems formalize its Lemma 2.1, its Corollary 2.2, the norm
+    dichotomy of its Theorem 3.1, and the even-level evaluation of its Theorem
+    7.4, in each case stripped of the cohomological interpretation the manuscript
+    gives them. Identified here so the provenance recorded in the review notes
+    can be assessed; being unpublished, it establishes nothing about novelty, priority,
+    or reception.
+- title: On the integral divisors of a^n - b^n
+  authors:
+  - George D. Birkhoff
+  - Harry S. Vandiver
+  id: https://doi.org/10.2307/2007263
+  type: paper
+  location: Ann. of Math. (2) 5 (1904), 173-180
+  relationship: independently-proves
+  note: The primitive-divisor theorem of Bang and Zsigmondy in the form the manuscript
+    cites. The compared theorem orderOf_eval_cyclotomic is that theorem specialized
+    to the modulus Phi_d(q), and is reproved in Lean from Mathlib's cyclotomic
+    machinery rather than adapted from this text. This submission makes no claim
+    of priority for the primitive-divisor theorem. Both authors are deceased, so
+    no author contact was possible.
+  author_endorsement: n/a
+- title: Numbers of solutions of equations in finite fields
+  authors:
+  - Andre Weil
+  id: https://doi.org/10.1090/S0002-9904-1949-09219-4
+  type: paper
+  location: Bull. Amer. Math. Soc. 55 (1949), 497-508
+  relationship: background
+  note: The source of the k-fold Jacobi sum, which is the single new definition
+    in the Challenge, and of the Gauss-Jacobi product formula and the degenerate
+    identity for a product-trivial Jacobi sum on which the norm dichotomy runs.
+    The author is deceased, so no contact was possible.
+  author_endorsement: n/a
+- title: The number of solutions of a particular equation in a finite field
+  authors:
+  - Leonard Carlitz
+  id: https://doi.org/10.5486/PMD.1956.4.3-4.36
+  type: paper
+  location: Publ. Math. Debrecen 4 (1956), 379-383
+  relationship: background
+  note: Earliest of the four semiprimitive Gauss-sum evaluations that drive the
+    even-level theorem. The author is deceased, so no contact was possible.
+  author_endorsement: n/a
+- title: Weights of irreducible cyclic codes
+  authors:
+  - Leonard D. Baumert
+  - Robert J. McEliece
+  id: https://doi.org/10.1016/S0019-9958(72)90354-3
+  type: paper
+  location: Information and Control 20 (1972), 158-175
+  relationship: background
+  note: Semiprimitive Gauss-sum evaluation in the coding-theoretic form; one of
+    the four classical inputs to the even-level theorem.
+  author_endorsement: not-contacted
+- title: Pure Gauss sums over finite fields
+  authors:
+  - Ronald J. Evans
+  id: https://doi.org/10.1112/S0025579300010299
+  type: paper
+  location: Mathematika 28 (1981), 239-248
+  relationship: background
+  note: Determines when a Gauss sum is a real multiple of a power of the field
+    size; one of the four classical inputs to the even-level theorem.
+  author_endorsement: not-contacted
+- title: Uniform cyclotomy
+  authors:
+  - Leonard D. Baumert
+  - William H. Mills
+  - Robert L. Ward
+  id: https://doi.org/10.1016/0022-314X(82)90058-0
+  type: paper
+  location: J. Number Theory 14 (1982), 67-82
+  relationship: background
+  note: The standard reference for the semiprimitive condition p^(d/2) = -1 mod
+    M, under which every nontrivial Gauss sum over the field of size p^d has an
+    explicitly signed value. This is exactly the condition that the exact order
+    statement supplies at even levels, and it is the engine of the even-level evaluation.
+  author_endorsement: not-contacted
+- title: Beyond uniform cyclotomy
+  authors:
+  - Sophie Huczynska
+  - Laura Johnson
+  - Maura B. Paterson
+  id: https://doi.org/10.1016/j.ffa.2025.102604
+  type: paper
+  location: Finite Fields Appl. 105 (2025), article 102604
+  relationship: background
+  note: 'Recorded as audience evidence rather than as an input: a 2025 continuation
+    of the Baumert-Mills-Ward programme, establishing that the semiprimitive/uniform-cyclotomy
+    community that would read the even-level theorem is currently active. No compared
+    statement uses this paper.'
+  author_endorsement: not-contacted
+- title: Die Nullstellen der Kongruenzzetafunktionen in gewissen zyklischen Faellen
+  authors:
+  - Harold Davenport
+  - Helmut Hasse
+  id: https://doi.org/10.1515/crll.1935.172.151
+  type: paper
+  location: J. Reine Angew. Math. 172 (1935), 151-182
+  relationship: background
+  note: 'Source of the Hasse-Davenport lifting relation for Gauss sums between
+    a finite field and its extensions. Recorded because it is the standard alternative
+    route to the even-level evaluation and because Mathlib has no lifting relation,
+    so a proof taking that route would have to build it; the route planned in PROOF_PLAN.md
+    goes through the semiprimitive evaluation instead, so as matters stand no compared
+    statement depends on this paper. Cited here to correct an omission in the source
+    manuscript, whose bibliography lists this work with no citation pointing at
+    it. Both authors are deceased, so no contact was possible.'
+  author_endorsement: n/a
+- title: On Fermat varieties
+  authors:
+  - Tetsuji Shioda
+  - Toshiyuki Katsura
+  id: https://doi.org/10.2748/tmj/1178229881
+  type: paper
+  location: Tohoku Math. J. (2) 31 (1979), 97-115
+  relationship: background
+  note: Character-eigenspace decomposition of the cohomology of Fermat varieties.
+    Ancestry for the manuscript's geometric reading, which is not formalized here;
+    recorded so the genealogy of the compared Jacobi-sum tuple is accurate.
+  author_endorsement: not-contacted
+- title: Cycles on Fermat hypersurfaces
+  authors:
+  - Ziv Ran
+  type: paper
+  location: Compositio Math. 42 (1980/81), 121-142
+  relationship: background
+  note: Same role as Shioda-Katsura. Not used by any compared statement.
+  author_endorsement: not-contacted
+- title: On special values of Jacobi-sum Hecke L-functions
+  authors:
+  - Noriyuki Otsubo
+  id: https://doi.org/10.1080/10586458.2014.971199
+  type: paper
+  location: Experiment. Math. 24 (2015), 247-259
+  relationship: background
+  note: 'Part of the Fermat-motive and Jacobi-sum-character audience named above.
+    Not used by any compared statement: its subject is the global Hecke theory
+    of Jacobi sums, which is out of scope here. Cited to correct an omission in
+    the source manuscript, whose bibliography lists this work with no citation
+    pointing at it.'
+  author_endorsement: not-contacted
+- title: Artin L-functions of diagonal hypersurfaces and generalized hypergeometric
+    functions over finite fields
+  authors:
+  - Akio Nakagawa
+  id: https://doi.org/10.32917/h2024001
+  type: paper
+  location: Hiroshima Math. J. 54 (2024), no. 3; preprint arXiv:2111.15054
+  relationship: background
+  note: 'The nearest diagonal-hypersurface neighbour of the compared statements:
+    it computes the Frobenius eigenvalues of diagonal hypersurfaces over finite
+    fields as Jacobi sums. It is named here explicitly because the source project''s
+    own literature boundary, dated 19 July 2026, identifies the Delsarte and hypergeometric-motive
+    literature as the main residual collision risk for the manuscript, and this
+    paper is that literature. The source manuscript''s bibliography lists it with
+    no citation pointing at it; that omission is corrected here. No compared statement
+    depends on this paper, and no claim is made that the compared statements are
+    absent from it -- only that a targeted search did not find them there.'
+  author_endorsement: not-contacted
+- title: Motivic Gauss and Jacobi sums
+  authors:
+  - Noriyuki Otsubo
+  - Takao Yamazaki
+  id: https://doi.org/10.5802/afst.1842
+  type: paper
+  location: Ann. Fac. Sci. Toulouse Math. (6) 35 (2026), 95-135; preprint arXiv:2402.06072
+  relationship: background
+  note: Named by the source project's literature boundary as the closest current
+    anchor. Its motivic Frobenius/Jacobi correspondence and its recursion for product-trivial
+    Jacobi sums cover the machinery behind the manuscript's geometric reading.
+    Recorded as the closest prior art to the compared statements; the compared
+    statements are not derived from it.
+  author_endorsement: not-contacted
+related_formalizations:
+- id: https://github.com/leanprover-community/mathlib4
+  relationship: independent
+  note: Mathlib is a prior formalization of several ingredients. It has the two-variable
+    Jacobi sum (NumberTheory/JacobiSum/Basic.lean, jacobiSum, together with jacobiSum_mul_jacobiSum_inv,
+    which is the algebraic form of the norm identity at k = 2), Gauss sums and
+    gaussSum_mul_gaussSum_eq_card (NumberTheory/GaussSum.lean), the cyclotomic
+    polynomials with isRoot_cyclotomic_iff and orderOf_root_cyclotomic_dvd (RingTheory/Polynomial/Cyclotomic/),
+    and lifting-the-exponent (NumberTheory/Multiplicity.lean). The k-fold Jacobi
+    sum defined in the Challenge extends jacobiSum from two characters to k of
+    them and agrees with it at k = 2; that agreement is one of the compared theorems.
+    Mathlib has no primitive-divisor (Bang-Zsigmondy) theorem in any form -- searched
+    by name this session, zero hits -- and no k-fold Jacobi sum.
+- id: https://github.com/nasqret/ZsigmondyChebyshev
+  relationship: independent
+  note: 'The nearest Lean 4 neighbour of the order statement found in a targeted
+    search: an AI-assisted formalization of Zsigmondy''s theorem for Chebyshev
+    polynomials (after S. Baranczuk, arXiv:1909.12143). It is a different theorem
+    -- the Chebyshev-polynomial analogue, not the classical statement for a^n -
+    b^n -- and nothing here depends on it. An older repository, sovesti/zsigmondy,
+    is Lean 3 and so cannot be imported by a Lean 4 development. No public Lean
+    4 formalization of the classical Bang-Zsigmondy theorem, or of the specialized-cyclotomic
+    order statement, was identified. That search was targeted, not exhaustive,
+    and absence from search is not proof that none exists.'
+status:
+  scope: 'PROVED: the exact
+    order of q modulo Phi_d(q); the repunit divisibility criterion; the Jacobi-sum
+    norm dichotomy; the exact even-level evaluation; and the reduction of the k-fold
+    Jacobi sum to Mathlib''s jacobiSum at k = 2. NOT proved and NOT claimed: any
+    cohomological statement of the source manuscript (concentration in degree k-1,
+    multiplicity one, the identification of the Jacobi sum as a Frobenius eigenvalue,
+    the weight reading of the dichotomy, the interior/boundary dichotomy of its
+    Proposition 4.1); its Theorem 6.1 on compatible systems and Hecke characters;
+    its Theorem 7.1, Lemma 7.2 and Corollaries 7.3 and 7.5 on Galois representations
+    and Chebotarev density; its Theorem 8.1 on the (q-1)-fold split cover; and
+    every statement in its sections 9 through 12.'
+  sorry_count: 0
+  sorry_in_definitions: 0
+  axioms: []
+automation:
+  methods:
+  - method: agent
+    models:
+    - claude-opus-5
+    - claude-fable-5
+    framework: Claude Code
+    tool_setup: 'The Challenge statement file, the comparator configuration and this
+      metadata were produced by a Claude Code agent working from the author''s
+      mathematical manuscript; every Mathlib declaration named in the Challenge
+      documentation was verified by grep against the pinned Mathlib checkout rather
+      than recalled, and the k = 2 reduction of the new definition was proved in a
+      scratch file before the statement was frozen. The proof development (the pinned
+      DigitVis library) was produced on 2026-08-26 by a lead agent (claude-opus-5)
+      coordinating five worker assignments (claude-opus-5, at most three concurrent)
+      against frozen lemma contracts, with independent re-verification -- clean
+      rebuild, per-theorem axiom audit, comment-stripped scan for sorry and
+      native_decide, and a whitespace-normalized diff of every compared declaration
+      against the Challenge -- by a separate agent (claude-fable-5) under the
+      author''s direction.'
+    cost:
+      wall_time: about 75 minutes of wall-clock for the proof development, concurrent agents
+      spend_usd: subscription-based
+      hardware: local Apple Silicon machine
+    prompting_notes: 'No specification given to an agent was found to be mathematically
+      wrong. One planning assumption was: the construction plan routed the semiprimitive
+      Gauss-sum evaluation through Stickelberger or Davenport-Hasse and flagged it as
+      the likely obstruction since Mathlib has neither; the lead agent instead proved
+      it elementarily by averaging over the subgroup of (p^s - 1)-th roots of unity, and
+      observed that in the k-fold product the sign the classical treatment determines
+      separately cancels identically and is never evaluated. The plan''s separate finite
+      checks for q = 2 were subsumed by a base-change bound and never appeared.'
+  spend_usd: subscription-based
+  notes: The mathematics is the author's. The Lean formalization is to be produced
+    by automation under the author's direction and verified mechanically.
+fidelity:
+  divergences: 'The compared statements are the arithmetic underneath the source
+    manuscript''s theorems, not those theorems as the manuscript states them. Four
+    specific divergences. (1) The manuscript''s Theorem 3.1 asserts that the Jacobi
+    sum is the geometric Frobenius eigenvalue alpha_j = (-1)^(k-1) J on a one-dimensional
+    compactly supported cohomology line, and reads the norm dichotomy as a drop
+    of one in cohomological weight. The compared theorem states the norm dichotomy
+    for the Jacobi sum J alone; the sign (-1)^(k-1) and the entire cohomological
+    reading are absent. (2) The manuscript''s Theorem 7.4 likewise states its closed
+    form for alpha_(p,d,k); the compared theorem states it for J, which differs
+    by that same sign. (3) The proof of the manuscript''s Lemma 2.1 mentions, besides
+    (q,d) = (2,6), the Zsigmondy family d = 2 with q+1 a power of two, noting that
+    the conclusion survives there. The formal statement takes (2,6) as the sole
+    exception; that this is the correct and complete exception list was checked
+    by direct computation of the order for every pair with q < 300 and d < 60.
+    (4) The manuscript states its Corollary 2.2 for the block lengths it uses;
+    the compared theorem carries no hypothesis on k, which is correct because both
+    sides hold at k = 0 and both fail at k = 1. In addition, the manuscript states
+    Theorem 7.4 for a rational prime p, and the compared even-level theorem keeps
+    that hypothesis, while the compared norm dichotomy is stated for a general
+    base q >= 2 with #K = q^d, which forces q to be a prime power and matches the
+    generality of the manuscript''s Theorem 3.1.'
+review:
+  status: internal-review
+  notes: 'Reviewed internally, mechanically: the pinned library was rebuilt from a clean
+    checkout against Mathlib v4.32.0; each of the five compared theorems was checked with
+    #print axioms to depend on exactly propext, Classical.choice and Quot.sound; a
+    comment-stripped scan found no sorry, native_decide or axiom declarations; the
+    definitional bridge between the Challenge''s jacobiSumK and the library''s was
+    compiled as an rfl check; and every compared declaration was diffed, whitespace-
+    normalized, against the Challenge text. No human expert has reviewed the
+    mathematics. Facts established at the drafting stage, kept for provenance: The source manuscript has not
+    been peer reviewed and is not public. Its computational apparatus is a validation
+    suite of 22 programs, described in the manuscript as regression evidence for
+    the exact arguments and explicitly not as the basis of any theorem; that suite
+    was re-run from a clean invocation on 26 August 2026 and reported all 22 programs
+    passing with no stderr and no drift in any of the 31 recorded artifact digests,
+    under a different Python version than the one in its recorded receipt. That
+    is a reproducibility fact about the manuscript''s own package and is recorded
+    for provenance only: it is not evidence for any compared statement, and no
+    script output has any standing as proof here. Independently of the manuscript,
+    and independently of that suite, the following were recomputed from scratch
+    while preparing this entry. The exact order of q modulo Phi_d(q) was computed
+    directly for every pair with 2 <= q < 300 and 2 <= d < 60, and (q,d) = (2,6)
+    was the only pair where it is not d. The divisibility criterion was checked
+    with no hypothesis on the block length for every q < 60, d < 16 and k < 60,
+    with no counterexample. The Jacobi-sum norm dichotomy was checked by brute-force
+    enumeration over the finite field for a range of (q,d,k) including non-prime
+    prime-power bases q = 4, 8, 9 and every unit residue j, and the exact even-level
+    value was checked including its sign branch. A literature search completed
+    26 August 2026 verified every bibliographic locator recorded above against
+    primary sources, and identified no public Lean 4 formalization of the classical
+    Bang-Zsigmondy theorem or of the specialized-cyclotomic order statement. That
+    search is recorded but not exhaustive, and absence from search is not proof
+    of open status.'
+alignment:
+  namespace: CyclotomicRepunit
+  statements:
+  - source: Lemma 2.1 of the source manuscript, "Exact specialized cyclotomic order"
+    lean: CyclotomicRepunit.orderOf_eval_cyclotomic
+    module: Challenge
+    status: proved
+    note: The manuscript writes the modulus as M_d(q) = Phi_d(q) and the conclusion
+      as ord_(Phi_d(q))(q) = d. The Lean statement is the multiplicative order
+      of the image of q in ZMod of the natural absolute value of the evaluation
+      of the d-th cyclotomic polynomial at q. Stated for all q >= 2 and d >= 2
+      with (q,d) = (2,6) excluded, which is the manuscript's exception list.
+  - source: Corollary 2.2 of the source manuscript, "Digital visibility"
+    lean: CyclotomicRepunit.dvd_repunit_iff
+    module: Challenge
+    status: proved
+    note: 'The manuscript names the left-hand side "level d is visible at block
+      length k". The Lean statement uses no such predicate: it states the divisibility
+      of the repunit sum by the evaluated cyclotomic polynomial, both written in
+      the integers, and asserts it equivalent to d dividing k.'
+  - source: Theorem 3.1 of the source manuscript, equation (3.x), the norm dichotomy
+    lean: CyclotomicRepunit.jacobiSumK_norm_dichotomy
+    module: Challenge
+    status: proved
+    note: Only the norm dichotomy is compared. The cohomological content of that
+      theorem -- vanishing outside degree k-1, one-dimensionality, the identification
+      of the Jacobi sum as a geometric Frobenius eigenvalue, and the reading of
+      the dichotomy as a one-step weight drop -- is not formalized and is not expressible
+      in Mathlib today. The manuscript's eigenvalue alpha_j equals (-1)^(k-1) times
+      the Jacobi sum the compared theorem is about.
+  - source: Theorem 7.4 of the source manuscript, "All-even-level orbit classification",
+      equation (7.x)
+    lean: CyclotomicRepunit.jacobiSumK_even_level_eval
+    module: Challenge
+    status: proved
+    note: Only the exact evaluation of the Jacobi sum is compared, again without
+      the sign (-1)^(k-1) that converts it to the manuscript's alpha_(p,d,k). The
+      Euler-product consequences drawn from it in that theorem, and its (2,6) collision
+      correction, are not formalized.
+  - source: Definitional fidelity of the one new definition; not a theorem of the
+      source manuscript
+    lean: CyclotomicRepunit.jacobiSumK_two
+    module: Challenge
+    status: proved
+    note: Records that the k-fold Jacobi sum defined in the Challenge is Mathlib's
+      two-variable jacobiSum when k = 2. Included as auditable evidence that the
+      new definition is the classical object and not a convenient surrogate.
+acknowledgements: Mathlib and its contributors; the Lean FRO for Lean, Comparator,
+  lean4export and Verso; the Mathlib Initiative for the formalization.yaml standard.
